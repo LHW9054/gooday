@@ -1,0 +1,15 @@
+package com.gooday.dashboard;
+
+import java.time.LocalDate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class DashboardController {
+    private final DashboardService service;
+
+    public DashboardController(DashboardService service) { this.service = service; }
+
+    @GetMapping("/api/dashboard")
+    public DashboardDto dashboard() { return service.build(LocalDate.now()); }
+}

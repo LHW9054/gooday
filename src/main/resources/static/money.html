@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gooday · 자산</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="/">☀️ Gooday</a>
+    <nav>
+      <a href="/">대시보드</a>
+      <a class="soon" title="2단계">주짓수</a>
+      <a href="/money.html" class="active">자산</a>
+      <a class="soon" title="4단계">기록</a>
+      <a class="soon" title="5단계">리포트</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="money-head">
+      <div class="tabs">
+        <button class="tab active" data-tab="month">월별</button>
+        <button class="tab" data-tab="year">종합표</button>
+      </div>
+      <div class="month-nav">
+        <button class="btn ghost small" data-move="-1">◀</button>
+        <b id="period-label"></b>
+        <button class="btn ghost small" data-move="1">▶</button>
+      </div>
+    </div>
+
+    <!-- 월별 -->
+    <section id="view-month">
+      <div id="month-empty" class="card empty-banner" hidden>
+        이 달은 아직 비어 있어요.
+        <button class="btn small" id="btn-copy">지난달 금액 복사해서 시작</button>
+      </div>
+      <div id="warnings"></div>
+      <div id="summary" class="stat-row"></div>
+
+      <div class="two-col">
+        <section class="card">
+          <div class="card-head"><h2>수입</h2><button class="btn ghost small" data-add="INCOME">+ 항목</button></div>
+          <div id="income"></div>
+        </section>
+        <section class="card">
+          <div class="card-head"><h2>지출</h2><button class="btn ghost small" data-add="EXPENSE">+ 항목</button></div>
+          <div id="expense"></div>
+        </section>
+      </div>
+      <div class="two-col">
+        <section class="card">
+          <div class="card-head"><h2>엔화저축 💴</h2><button class="btn ghost small" data-add="SAVING" data-cur="JPY">+ 항목</button></div>
+          <div id="saving-jpy"></div>
+        </section>
+        <section class="card">
+          <div class="card-head"><h2>원화저축 🇰🇷</h2><button class="btn ghost small" data-add="SAVING" data-cur="KRW">+ 항목</button></div>
+          <div id="saving-krw"></div>
+          <label class="fx">이달 환율 1엔 = <input id="fx" inputmode="decimal" placeholder="8.86"> 원</label>
+        </section>
+      </div>
+      <p class="muted hint">금액 칸을 고치고 Enter 또는 다른 칸으로 이동하면 저장돼요. <b>투자·저축</b>과 <b>용돈</b>은 자동 계산이에요.</p>
+    </section>
+
+    <!-- 종합표 -->
+    <section id="view-year" hidden>
+      <div class="two-col">
+        <section class="card"><div class="card-head"><h2>자산 목표</h2></div><div id="assets"></div></section>
+        <section class="card"><div class="card-head"><h2>분기 저축 목표</h2></div><div id="quarters"></div></section>
+      </div>
+      <div class="two-col">
+        <section class="card"><div class="card-head"><h2>원화저축 현황</h2></div><div id="krw-status"></div></section>
+        <section class="card"><div class="card-head"><h2>빚 상환</h2></div><div id="debts"></div></section>
+      </div>
+      <section class="card"><div class="card-head"><h2>수입</h2></div><div class="scroll-x" id="year-income"></div></section>
+      <section class="card"><div class="card-head"><h2>지출</h2></div><div class="scroll-x" id="year-expense"></div></section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="js/api.js"></script>
+  <script src="js/money.js"></script>
+</body>
+</html>

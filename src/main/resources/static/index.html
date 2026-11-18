@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gooday</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="/">☀️ Gooday</a>
+    <nav>
+      <a href="/" class="active">대시보드</a>
+      <a class="soon" title="2단계">주짓수</a>
+      <a href="/money.html">자산</a>
+      <a class="soon" title="4단계">기록</a>
+      <a class="soon" title="5단계">리포트</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hello">
+      <h1 id="today-title">오늘</h1>
+      <p id="today-sub" class="muted"></p>
+    </section>
+
+    <!-- D-day -->
+    <section class="card">
+      <div class="card-head">
+        <h2>D-day</h2>
+        <button class="btn ghost" data-new-dday>+ 추가</button>
+      </div>
+      <div id="ddays" class="dday-grid"></div>
+    </section>
+
+    <div class="two-col">
+      <!-- 오늘의 루틴 -->
+      <section class="card">
+        <div class="card-head">
+          <h2>오늘의 루틴 <span id="routine-count" class="muted"></span></h2>
+          <button class="btn ghost" data-open="dlg-routine">+ 추가</button>
+        </div>
+        <ul id="routines" class="checklist"></ul>
+      </section>
+
+      <!-- 루틴 달성률 -->
+      <section class="card">
+        <div class="card-head"><h2>루틴 달성률</h2></div>
+        <div id="rates" class="rates"></div>
+      </section>
+    </div>
+
+    <!-- 목표 -->
+    <section class="card">
+      <div class="card-head">
+        <h2>목표</h2>
+        <button class="btn ghost" data-open="dlg-goal">+ 추가</button>
+      </div>
+      <div id="goals" class="goals"></div>
+    </section>
+  </main>
+
+  <!-- 추가 다이얼로그 -->
+  <dialog id="dlg-dday">
+    <form method="dialog" data-submit="dday">
+      <h3 id="dday-dlg-title">D-day 추가</h3>
+      <input type="hidden" name="id">
+      <label>제목 <input name="title" required maxlength="100" placeholder="JLPT N1 시험"></label>
+      <label>날짜 <input name="targetDate" type="date" required></label>
+      <label>분류
+        <select name="category">
+          <option value="EXAM">시험</option><option value="BJJ">주짓수</option>
+          <option value="PAYDAY">월급</option><option value="CARD">카드</option>
+          <option value="ETC" selected>기타</option>
+        </select>
+      </label>
+      <label>반복
+        <select name="repeatType">
+          <option value="NONE">없음</option><option value="MONTHLY">매월</option><option value="YEARLY">매년</option>
+        </select>
+      </label>
+      <label>메모 <input name="memo" maxlength="500" placeholder="수험번호, 장소 등"></label>
+      <label class="inline"><input name="pinned" type="checkbox"> 상단 고정</label>
+      <div class="actions"><button value="cancel" formnovalidate class="btn ghost">취소</button><button class="btn">저장</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-routine">
+    <form method="dialog" data-submit="routine">
+      <h3>루틴 추가</h3>
+      <label>이름 <input name="title" required maxlength="100" placeholder="JLPT 단어 30개"></label>
+      <label>분류
+        <select name="category">
+          <option value="STUDY">공부</option><option value="EXERCISE">운동</option>
+          <option value="FINANCE">자산</option><option value="LIFE" selected>생활</option>
+        </select>
+      </label>
+      <fieldset class="days">
+        <legend>요일</legend>
+        <!-- value = 비트 (월=1 … 일=64) -->
+        <label><input type="checkbox" name="day" value="1" checked>월</label>
+        <label><input type="checkbox" name="day" value="2" checked>화</label>
+        <label><input type="checkbox" name="day" value="4" checked>수</label>
+        <label><input type="checkbox" name="day" value="8" checked>목</label>
+        <label><input type="checkbox" name="day" value="16" checked>금</label>
+        <label><input type="checkbox" name="day" value="32" checked>토</label>
+        <label><input type="checkbox" name="day" value="64" checked>일</label>
+      </fieldset>
+      <div class="actions"><button value="cancel" formnovalidate class="btn ghost">취소</button><button class="btn">저장</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-goal">
+    <form method="dialog" data-submit="goal">
+      <h3>목표 추가</h3>
+      <label>목표 <input name="title" required maxlength="100" placeholder="주짓수 주 3회"></label>
+      <label>기간
+        <select name="periodType">
+          <option value="DAILY">매일</option><option value="WEEKLY" selected>매주</option>
+          <option value="MONTHLY">매월</option><option value="YEARLY">매년</option>
+        </select>
+      </label>
+      <div class="row">
+        <label>목표치 <input name="targetValue" type="number" min="0.1" step="0.1" required value="3"></label>
+        <label>단위 <input name="unit" maxlength="20" value="회"></label>
+      </div>
+      <div class="actions"><button value="cancel" formnovalidate class="btn ghost">취소</button><button class="btn">저장</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
